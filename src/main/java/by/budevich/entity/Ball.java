@@ -7,6 +7,12 @@ public class Ball {
     private static final int MIN_BALL_SIZE = 1;
     private static final int MAX_BALL_SIZE = 6;
 
+    public Ball(int size, String color, String type) {
+        this.setSize(size);
+        this.setColor(color);
+        this.setType(type);
+    }
+
     public int getSize() {
         return this.size;
     }
