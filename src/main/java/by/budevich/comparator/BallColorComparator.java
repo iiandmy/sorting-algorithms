@@ -19,8 +19,8 @@ public class BallColorComparator implements RepoBasedComparator<Ball> {
         int o2Index = colorValue.indexOf(o2.getColor());
 
         return (o1Index < 0) || (o2Index < 0) ?
-                Integer.compare(o1Index, o2Index) :
-                Integer.compare(o2Index, o1Index);
+                Integer.compare(o2Index, o1Index) :
+                Integer.compare(o1Index, o2Index);
     }
 
     public Repository<String> getBallColorRepository() {

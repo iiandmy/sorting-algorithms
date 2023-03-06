@@ -18,8 +18,8 @@ public class BallTypeComparator implements RepoBasedComparator<Ball> {
         int o2Index = typeValues.indexOf(o2.getType());
 
         return (o1Index < 0) || (o2Index < 0) ?
-                Integer.compare(o1Index, o2Index) :
-                Integer.compare(o2Index, o1Index);
+                Integer.compare(o2Index, o1Index) :
+                Integer.compare(o1Index, o2Index);
     }
 
     public Repository<String> getBallTypeRepository() {

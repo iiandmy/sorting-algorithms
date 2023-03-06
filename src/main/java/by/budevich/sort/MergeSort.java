@@ -1,8 +1,6 @@
 package by.budevich.sort;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class MergeSort<T> implements Sort<T> {
     @Override
@@ -11,13 +9,13 @@ public class MergeSort<T> implements Sort<T> {
             return;
         }
 
-        List<T> leftSide = collection.subList(0, collection.size() / 2);
-        List<T> rightSide = collection.subList(collection.size() / 2, collection.size());
+        List<T> leftSide = new ArrayList<>(collection.subList(0, collection.size() / 2));
+        List<T> rightSide = new ArrayList<>(collection.subList(collection.size() / 2, collection.size()));
+        collection.clear();
 
         sort(leftSide, comparator);
         sort(rightSide, comparator);
 
-        collection.clear();
         collection.addAll(merge(leftSide, rightSide, comparator));
     }
 
@@ -27,6 +25,7 @@ public class MergeSort<T> implements Sort<T> {
             Comparator<T> comparator
     ) {
         List<T> result = new ArrayList<>();
+
         int i = 0, j = 0;
 
         while (i < leftSide.size() && j < rightSide.size()) {
@@ -44,6 +43,13 @@ public class MergeSort<T> implements Sort<T> {
             result.add(rightSide.get(j));
             i++;
             j++;
+        }
+
+        if (i == leftSide.size()) {
+            result.addAll(rightSide.subList(j, rightSide.size()));
+        }
+        if (j == rightSide.size()) {
+            result.addAll(leftSide.subList(i, leftSide.size()));
         }
 
         return result;
