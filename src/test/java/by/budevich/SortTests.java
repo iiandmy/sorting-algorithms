@@ -8,15 +8,18 @@ import by.budevich.entity.Ball;
 import by.budevich.repo.RepositoryImpl;
 import by.budevich.repo.Repository;
 import by.budevich.sort.MergeSort;
+import by.budevich.sort.QuickSort;
 import by.budevich.sort.Sort;
 import junit.framework.TestCase;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SortTests extends TestCase {
     private Sort<Ball> mergeSort;
+    private Sort<Ball> quickSort;
     private List<Ball> listToSort;
     private Repository<String> colorRepository;
     private Repository<String> typeRepository;
@@ -31,6 +34,7 @@ public class SortTests extends TestCase {
 
     public void setUp() {
         mergeSort = new MergeSort<>();
+        quickSort = new QuickSort<>();
         listToSort = new ArrayList<>(List.of(
                 new Ball(3, "Foo", "Soccer"),
                 new Ball(5, "Red", "Basketball"),
@@ -44,6 +48,22 @@ public class SortTests extends TestCase {
         comparatorByColor = new BallColorComparator(colorRepository);
         comparatorByType = new BallTypeComparator(typeRepository);
         comparatorBySize = new BallSizeComparator();
+    }
+
+    public void testQuickSort() {
+        List<Ball> listCopy = new ArrayList<>(listToSort);
+        listCopy.sort(comparatorBySize);
+
+        quickSort.sort(listToSort, comparatorBySize);
+
+        assertEquals(
+                listCopy.stream()
+                        .map(Ball::getSize)
+                        .collect(Collectors.toList()),
+                listToSort.stream()
+                        .map(Ball::getSize)
+                        .collect(Collectors.toList())
+        );
     }
 
     public void testMergeSortByColor() {
@@ -77,6 +97,7 @@ public class SortTests extends TestCase {
         List<Ball> emptyList = new ArrayList<>();
 
         mergeSort.sort(emptyList, comparatorBySize);
+        quickSort.sort(emptyList, comparatorBySize);
 
         assertEquals(new ArrayList<>(), emptyList);
     }
