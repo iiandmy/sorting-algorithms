@@ -5,7 +5,7 @@ import java.util.*;
 public class MergeSort<T> implements Sort<T> {
     @Override
     public void sort(List<T> collection, Comparator<T> comparator) {
-        if (collection.size() == 1) {
+        if (collection.size() <= 1) {
             return;
         }
 
