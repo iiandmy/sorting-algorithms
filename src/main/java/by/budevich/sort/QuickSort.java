@@ -1,5 +1,6 @@
 package by.budevich.sort;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -22,15 +23,11 @@ public class QuickSort<T> implements Sort<T> {
             if (comparator.compare(collection.get(i), pivot) >= 0) {
                 continue;
             }
-            T tmp = collection.get(partitionIndex);
-            collection.set(partitionIndex, collection.get(i));
-            collection.set(i, tmp);
+            Collections.swap(collection, partitionIndex, i);
             partitionIndex++;
         }
 
-        T tmp = collection.get(partitionIndex);
-        collection.set(partitionIndex, collection.get(collection.size() - 1));
-        collection.set(collection.size() - 1, tmp);
+        Collections.swap(collection, partitionIndex, collection.size() - 1);
 
         return partitionIndex;
     }

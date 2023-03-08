@@ -1,19 +1,19 @@
 package by.budevich.comparator;
 
 import by.budevich.entity.Ball;
-import by.budevich.repo.Repository;
+import by.budevich.repo.DataResource;
 
 import java.util.List;
 
-public class BallTypeComparator implements RepoBasedComparator<Ball> {
-    private Repository<String> ballTypeRepository;
-    public BallTypeComparator(Repository<String> ballTypeRepo) {
-        this.ballTypeRepository = ballTypeRepo;
+public class BallTypeComparator implements ResourceBasedComparator<Ball, String> {
+    private DataResource<String> ballTypeDataResource;
+    public BallTypeComparator(DataResource<String> ballTypeResource) {
+        this.ballTypeDataResource = ballTypeResource;
     }
 
     @Override
     public int compare(Ball o1, Ball o2) {
-        List<String> typeValues = ballTypeRepository.fetchData();
+        List<String> typeValues = ballTypeDataResource.fetchData();
         int o1Index = typeValues.indexOf(o1.getType());
         int o2Index = typeValues.indexOf(o2.getType());
 
@@ -22,11 +22,13 @@ public class BallTypeComparator implements RepoBasedComparator<Ball> {
                 Integer.compare(o1Index, o2Index);
     }
 
-    public Repository<String> getBallTypeRepository() {
-        return ballTypeRepository;
+    @Override
+    public DataResource<String> getResource() {
+        return ballTypeDataResource;
     }
 
-    public void setBallTypeRepository(Repository<String> ballTypeRepository) {
-        this.ballTypeRepository = ballTypeRepository;
+    @Override
+    public void setResource(DataResource<String> resource) {
+        this.ballTypeDataResource = resource;
     }
 }

@@ -26,30 +26,30 @@ public class MergeSort<T> implements Sort<T> {
     ) {
         List<T> result = new ArrayList<>();
 
-        int i = 0, j = 0;
+        int leftSideIndex = 0, rightSideIndex = 0;
 
-        while (i < leftSide.size() && j < rightSide.size()) {
-            if (comparator.compare(leftSide.get(i), rightSide.get(j)) > 0) {
-                result.add(rightSide.get(j));
-                j++;
+        while (leftSideIndex < leftSide.size() && rightSideIndex < rightSide.size()) {
+            if (comparator.compare(leftSide.get(leftSideIndex), rightSide.get(rightSideIndex)) > 0) {
+                result.add(rightSide.get(rightSideIndex));
+                rightSideIndex++;
                 continue;
             }
-            if (comparator.compare(leftSide.get(i), rightSide.get(j)) < 0) {
-                result.add(leftSide.get(i));
-                i++;
+            if (comparator.compare(leftSide.get(leftSideIndex), rightSide.get(rightSideIndex)) < 0) {
+                result.add(leftSide.get(leftSideIndex));
+                leftSideIndex++;
                 continue;
             }
-            result.add(leftSide.get(i));
-            result.add(rightSide.get(j));
-            i++;
-            j++;
+            result.add(leftSide.get(leftSideIndex));
+            result.add(rightSide.get(rightSideIndex));
+            leftSideIndex++;
+            rightSideIndex++;
         }
 
-        if (i == leftSide.size()) {
-            result.addAll(rightSide.subList(j, rightSide.size()));
+        if (leftSideIndex == leftSide.size()) {
+            result.addAll(rightSide.subList(rightSideIndex, rightSide.size()));
         }
-        if (j == rightSide.size()) {
-            result.addAll(leftSide.subList(i, leftSide.size()));
+        if (rightSideIndex == rightSide.size()) {
+            result.addAll(leftSide.subList(leftSideIndex, leftSide.size()));
         }
 
         return result;

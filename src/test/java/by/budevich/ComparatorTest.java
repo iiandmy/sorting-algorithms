@@ -3,33 +3,30 @@ package by.budevich;
 import by.budevich.comparator.BallColorComparator;
 import by.budevich.comparator.BallSizeComparator;
 import by.budevich.comparator.BallTypeComparator;
-import by.budevich.comparator.RepoBasedComparator;
+import by.budevich.comparator.ResourceBasedComparator;
 import by.budevich.entity.Ball;
-import by.budevich.repo.RepositoryImpl;
-import by.budevich.repo.Repository;
+import by.budevich.repo.ListDataResource;
+import by.budevich.repo.DataResource;
 import junit.framework.TestCase;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 public class ComparatorTest extends TestCase {
     private Comparator<Ball> sizeComparator;
-    private RepoBasedComparator<Ball> typeComparator;
-    private RepoBasedComparator<Ball> colorComparator;
-    private Repository<String> colorRepo;
-    private Repository<String> typeRepo;
+    private ResourceBasedComparator<Ball, String> typeComparator;
+    private ResourceBasedComparator<Ball, String> colorComparator;
 
     public ComparatorTest(String testName) {
         super(testName);
     }
 
     protected void setUp() {
-        this.colorRepo = new RepositoryImpl(List.of("Green", "Blue", "Red"));
-        this.typeRepo = new RepositoryImpl(List.of("Basketball", "Soccer", "Volleyball"));
+        DataResource<String> colorRepo = new ListDataResource(List.of("Green", "Blue", "Red"));
+        DataResource<String> typeRepo = new ListDataResource(List.of("Basketball", "Soccer", "Volleyball"));
         this.sizeComparator = new BallSizeComparator();
-        this.colorComparator = new BallColorComparator(this.colorRepo);
-        this.typeComparator = new BallTypeComparator(this.typeRepo);
+        this.colorComparator = new BallColorComparator(colorRepo);
+        this.typeComparator = new BallTypeComparator(typeRepo);
     }
 
     public void testTypeComparator() {

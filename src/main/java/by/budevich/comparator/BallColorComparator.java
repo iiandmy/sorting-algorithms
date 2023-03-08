@@ -1,20 +1,20 @@
 package by.budevich.comparator;
 
 import by.budevich.entity.Ball;
-import by.budevich.repo.Repository;
+import by.budevich.repo.DataResource;
 
 import java.util.List;
 
-public class BallColorComparator implements RepoBasedComparator<Ball> {
-    private Repository<String> ballColorRepository;
+public class BallColorComparator implements ResourceBasedComparator<Ball, String> {
+    private DataResource<String> ballColorDataResource;
 
-    public BallColorComparator(Repository<String> ballColorRepo) {
-        this.ballColorRepository = ballColorRepo;
+    public BallColorComparator(DataResource<String> ballColorResource) {
+        this.ballColorDataResource = ballColorResource;
     }
 
     @Override
     public int compare(Ball o1, Ball o2) {
-        List<String> colorValue = ballColorRepository.fetchData();
+        List<String> colorValue = ballColorDataResource.fetchData();
         int o1Index = colorValue.indexOf(o1.getColor());
         int o2Index = colorValue.indexOf(o2.getColor());
 
@@ -23,11 +23,13 @@ public class BallColorComparator implements RepoBasedComparator<Ball> {
                 Integer.compare(o1Index, o2Index);
     }
 
-    public Repository<String> getBallColorRepository() {
-        return ballColorRepository;
+    @Override
+    public DataResource<String> getResource() {
+        return ballColorDataResource;
     }
 
-    public void setBallColorRepository(Repository<String> ballColorRepository) {
-        this.ballColorRepository = ballColorRepository;
+    @Override
+    public void setResource(DataResource<String> resource) {
+        this.ballColorDataResource = resource;
     }
 }

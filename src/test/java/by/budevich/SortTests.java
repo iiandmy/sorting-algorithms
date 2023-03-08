@@ -3,10 +3,10 @@ package by.budevich;
 import by.budevich.comparator.BallColorComparator;
 import by.budevich.comparator.BallSizeComparator;
 import by.budevich.comparator.BallTypeComparator;
-import by.budevich.comparator.RepoBasedComparator;
+import by.budevich.comparator.ResourceBasedComparator;
 import by.budevich.entity.Ball;
-import by.budevich.repo.RepositoryImpl;
-import by.budevich.repo.Repository;
+import by.budevich.repo.ListDataResource;
+import by.budevich.repo.DataResource;
 import by.budevich.sort.MergeSort;
 import by.budevich.sort.QuickSort;
 import by.budevich.sort.Sort;
@@ -21,10 +21,8 @@ public class SortTests extends TestCase {
     private Sort<Ball> mergeSort;
     private Sort<Ball> quickSort;
     private List<Ball> listToSort;
-    private Repository<String> colorRepository;
-    private Repository<String> typeRepository;
-    private RepoBasedComparator<Ball> comparatorByColor;
-    private RepoBasedComparator<Ball> comparatorByType;
+    private ResourceBasedComparator<Ball, String> comparatorByColor;
+    private ResourceBasedComparator<Ball, String> comparatorByType;
     private Comparator<Ball> comparatorBySize;
 
     public SortTests(String testName )
@@ -43,10 +41,10 @@ public class SortTests extends TestCase {
                 new Ball(6, "Blue", "Polo"),
                 new Ball(6, "Black", "Soccer")
         ));
-        colorRepository = new RepositoryImpl(List.of("Green", "Red", "Blue"));
-        typeRepository = new RepositoryImpl(List.of("Basketball", "Soccer", "Volleyball"));
-        comparatorByColor = new BallColorComparator(colorRepository);
-        comparatorByType = new BallTypeComparator(typeRepository);
+        DataResource<String> colorDataResource = new ListDataResource(List.of("Green", "Red", "Blue"));
+        DataResource<String> typeDataResource = new ListDataResource(List.of("Basketball", "Soccer", "Volleyball"));
+        comparatorByColor = new BallColorComparator(colorDataResource);
+        comparatorByType = new BallTypeComparator(typeDataResource);
         comparatorBySize = new BallSizeComparator();
     }
 
@@ -104,7 +102,7 @@ public class SortTests extends TestCase {
 
     public void testOneElArray() {
         List<Ball> list = new ArrayList<>();
-        list.add(new Ball(3, "Color", "Type"));
+        list.add(new Ball());
 
         mergeSort.sort(list, comparatorBySize);
 
